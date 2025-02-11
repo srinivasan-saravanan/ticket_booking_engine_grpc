@@ -1,0 +1,59 @@
+syntax = "proto3";
+
+package proto;
+
+option go_package = "ticket_booking_engine/package/ticketpb";
+
+import "user.proto";
+
+service TicketService {
+  rpc BookTicket(BookingRequest) returns (Receipt);
+  rpc GetReceipt(UserRequest) returns (Receipt);
+  rpc GetReceiptsBySeatSection(SeatSectionRequest) returns(SectionDetails);
+  rpc RemoveUserReceipt(UserRequest) returns(RemoveUserResponse);
+  rpc ModifySeat(ModifySeatRequest) returns(Receipt);
+}
+
+message TicketInfo {
+  string From = 1;
+  string To = 2;
+  proto.User user = 3;
+  float price = 4;
+}
+
+message BookingRequest {
+  TicketInfo ticket_info = 1;
+}
+
+message Receipt {
+  TicketInfo ticket_info = 1;
+  string SeatSection = 2;
+  string SeatNumber = 3;
+}
+
+message UserRequest {
+  string Email = 1;
+}
+
+message SeatSectionRequest {
+  string Section = 1;
+}
+
+message SectionDetails {
+  repeated UserSeat user_seats = 1;
+}
+
+message UserSeat {
+  User user = 1;
+  string seat = 2;
+}
+
+message RemoveUserResponse {
+  bool Success = 1;
+}
+
+message ModifySeatRequest {
+  string Email = 1;
+  string Section = 2;
+  string SeatNumber = 3;
+}
