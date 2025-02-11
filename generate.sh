@@ -1,0 +1,1 @@
+protoc -I=proto --go_out=. --go-grpc_out=. --go-grpc_opt=module=ticket_booking_engine --go_opt=module=ticket_booking_engine proto/ticket.proto proto/user.proto
